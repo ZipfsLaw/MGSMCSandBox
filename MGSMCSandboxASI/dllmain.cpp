@@ -19,7 +19,14 @@ DWORD WINAPI Start(LPVOID lpParam)
 {
 	baseAddress = (DWORD64)GetModuleHandle(NULL);
 	if (baseAddress == NULL) return 0;
-	Sleep(5000); //ZIP: Just after loading save data.
+	//ZIP: Waits until MGS3 is running!
+	std::string strExeName;
+	char chExeName[MAX_PATH];
+	while (strExeName.find("METAL GEAR SOLID3.exe") == std::string::npos) {
+		GetModuleFileNameA(nullptr, chExeName, MAX_PATH);
+		strExeName = chExeName;
+		Sleep(5000);
+	}
 	ReplaceText(0x88C370, "KA-BAR:\nA combat and utility knife that has a\n7-inch 1095 carbon steel clip point\nblade and leather handle.", 126);
 	ReplaceText(0x894520, "Mk22:\nA modified version of the Smith &\nWesson 39 handgun that fires\ntranquilizer rounds.", 92);
 	ReplaceText(0x8945E0, "XM16E1:\nA modified variant of the M16\nwhich featured improvements\nsuch as forward assist and\nchrome bolt carrier.", 124);
